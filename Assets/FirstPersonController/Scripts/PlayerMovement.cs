@@ -1,56 +1,65 @@
 ﻿/******************************************************************************
  * Initial code based on Brackey's FPS video
  * https://youtu.be/_QajrabyTJc
+ * 
+ * Notes:
+ * Refactored public fields to [SerializeField].
+ * 
+ * Refactored player and environment attributes to use Float References. This 
+ * will allow other objects to buff/debuff these settings. 
+ *****************************************************************************/
+
+/******************************************************************************
+ * 
  *****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
+using Architecture.Variables;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Implement movement
-    public CharacterController controller;
-    public float speed = 12f;
+   [Header("Character")]
+   [SerializeField] private CharacterController controller;
 
-    // Implement gravity
-    public float gravity = -9.81f;
-    private Vector3 velocity;
+   [Header("Attributes")]
+   [SerializeField] private FloatReference playerSpeed;
+   [SerializeField] private FloatReference jumpHeight;
 
-    // Implement ground reset of gravity
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    private bool isGrounded;
+   [Header("Environment")]
+   [SerializeField] private FloatReference gravity;
+   private Vector3 velocity;
 
-    // Implement jumping
-    public float jumpHeight = 3f;
-    
-    void Update()
-    {
-        // Check if the player is on the ground and reset gravity
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log(isGrounded);
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+   [Header("Ground")]
+   [SerializeField] private Transform groundCheck;
+   [SerializeField] private float groundDistance = 0.4f;
+   [SerializeField] private LayerMask groundMask;
+   private bool isGrounded;
 
-        // Implement movement
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+   void Update()
+   {
+       // Check if the player is on the ground and reset gravity
+       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+       if (isGrounded && velocity.y < 0)
+       {
+           velocity.y = -2f;
+       }
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+       // Implement movement
+       float x = Input.GetAxis("Horizontal");
+       float z = Input.GetAxis("Vertical");
 
-        // Implement jumping       
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            Debug.Log("Jumping");
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+       Vector3 move = transform.right * x + transform.forward * z;
+       controller.Move(move * playerSpeed.Value * Time.deltaTime);
 
-        // Implement gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-    }
+       // Implement jumping       
+       if(Input.GetButtonDown("Jump") && isGrounded)
+       {
+           velocity.y = Mathf.Sqrt(jumpHeight.Value * -2f * gravity.Value);
+       }
+
+       // Implement gravity
+       velocity.y += gravity.Value * Time.deltaTime;
+       controller.Move(velocity * Time.deltaTime);
+   }
 }

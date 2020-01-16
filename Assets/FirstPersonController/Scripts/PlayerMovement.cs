@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/******************************************************************************
+ * Initial code based on Brackey's FPS video
+ * https://youtu.be/_QajrabyTJc
+ *****************************************************************************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

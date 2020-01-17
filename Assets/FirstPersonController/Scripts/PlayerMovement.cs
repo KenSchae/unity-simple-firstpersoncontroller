@@ -19,47 +19,57 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-   [Header("Character")]
-   [SerializeField] private CharacterController controller;
+    [Header("Character")]
+    [SerializeField] private CharacterController controller;
 
-   [Header("Attributes")]
-   [SerializeField] private FloatReference playerSpeed;
-   [SerializeField] private FloatReference jumpHeight;
+    [Header("Attributes")]
+    [SerializeField] private FloatReference playerWalkSpeed;
+    [SerializeField] private FloatReference playerRunSpeed;
+    [SerializeField] private FloatReference jumpHeight;
 
-   [Header("Environment")]
-   [SerializeField] private FloatReference gravity;
-   private Vector3 velocity;
+    [Header("Environment")]
+    [SerializeField] private FloatReference gravity;
+    private Vector3 velocity;
 
-   [Header("Ground")]
-   [SerializeField] private Transform groundCheck;
-   [SerializeField] private float groundDistance = 0.4f;
-   [SerializeField] private LayerMask groundMask;
-   private bool isGrounded;
+    [Header("Ground")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask;
+    private bool isGrounded;
 
-   void Update()
-   {
-       // Check if the player is on the ground and reset gravity
-       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-       if (isGrounded && velocity.y < 0)
-       {
-           velocity.y = -2f;
-       }
+    void Update()
+    {
+        // Check if the player is on the ground and reset gravity
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
 
-       // Implement movement
-       float x = Input.GetAxis("Horizontal");
-       float z = Input.GetAxis("Vertical");
+        // Implement movement
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-       Vector3 move = transform.right * x + transform.forward * z;
-       controller.Move(move * playerSpeed.Value * Time.deltaTime);
+        Vector3 move = transform.right * x + transform.forward * z;
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+        {
+            Debug.Log("Running");
+            controller.Move(move * playerRunSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Debug.Log("Walking");
+            controller.Move(move * playerWalkSpeed.Value * Time.deltaTime);
+        }
 
-       // Implement jumping       
-       if(Input.GetButtonDown("Jump") && isGrounded)
-       {
-           velocity.y = Mathf.Sqrt(jumpHeight.Value * -2f * gravity.Value);
-       }
+        // Implement jumping       
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight.Value * -2f * gravity.Value);
+        }
 
-       // Implement gravity
-       velocity.y += gravity.Value * Time.deltaTime;
-       controller.Move(velocity * Time.deltaTime);
-   }
+        // Implement gravity
+        velocity.y += gravity.Value * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
 }

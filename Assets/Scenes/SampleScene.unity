@@ -226,6 +226,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 54e5f8576430e8b4c9d8162f5505b836,
         type: 2}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: gravity.UseConstant
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: gravity.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: ba6e18959c9b91d49bbb2b9897c0dd09,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 3550138641603433537, guid: 9854b5f248050394d812af81aea24c85, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9854b5f248050394d812af81aea24c85, type: 3}

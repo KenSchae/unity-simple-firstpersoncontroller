@@ -237,6 +237,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: ba6e18959c9b91d49bbb2b9897c0dd09,
         type: 2}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: playerWalkSpeed.UseConstant
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: playerRunSpeed.UseConstant
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: playerWalkSpeed.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 83bee3e171c362344adb248477e4d1ef,
+        type: 2}
+    - target: {fileID: 3550138640128765045, guid: 9854b5f248050394d812af81aea24c85,
+        type: 3}
+      propertyPath: playerRunSpeed.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: e96483bba2736bb499237d1aa26f580a,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 3550138641603433537, guid: 9854b5f248050394d812af81aea24c85, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9854b5f248050394d812af81aea24c85, type: 3}
